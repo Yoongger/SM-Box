@@ -56,5 +56,5 @@ RUN mkdir -p /var/log/sing-box && \
     chmod +x /opt/mosdns/mosdns && \
     chmod +x /entrypoint.sh
 
-EXPOSE 53/udp 53/tcp 5354/udp 5354/tcp 80 9090
+EXPOSE 53/udp 53/tcp 80 5354 9090
 ENTRYPOINT ["/entrypoint.sh"]
