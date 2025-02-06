@@ -34,13 +34,16 @@ RUN curl -Lo /opt/mosdns.zip \
 # 复制配置文件
 COPY config/sing-box.json /opt/sing-box/config.json
 COPY config/mosdns.yaml /opt/mosdns/config.yaml
-COPY config/mosdns/* /opt/mosdns
-COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY config/plugins/* /opt/mosdns
+COPY config/supervisord.conf /etc/supervisord.conf
+COPY config/entrypoint.sh /entrypoint.sh
 
 # 创建运行目录
 RUN mkdir -p /var/log/sing-box && \
     mkdir -p /var/log/mosdns && \
     chmod +x /opt/sing-box/sing-box && \
-    chmod +x /opt/mosdns/mosdns
+    chmod +x /opt/mosdns/mosdns && \
+    chmod +x /entrypoint.sh
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+EXPOSE 53/udp 53/tcp 5354/udp 5354/tcp 80 9090
+ENTRYPOINT ["/entrypoint.sh"]
