@@ -13,9 +13,9 @@ plugins:
           addr: 10.0.0.1
 
         - tag: direct-dns1
-          addr: {direct-dns1}
+          addr: 223.5.5.5
         - tag: direct-dns2
-          addr: {direct-dns2}
+          addr: 119.29.29.29
 
         - tag: google-dns
           addr: https://dns.google/dns-query
