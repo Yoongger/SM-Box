@@ -49,6 +49,6 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # 创建运行目录
 RUN mkdir -p /var/log/{sing-box,mosdns} && \
-    chmod +x /usr/local/bin/{sing-box,mosdns}
+    chmod +x /usr/local/bin/sing-box && chmod +x /usr/local/bin/mosdns
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
