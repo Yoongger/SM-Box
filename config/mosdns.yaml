@@ -10,7 +10,7 @@ plugins:
           enable_pipeline: false
 
         - tag: router-dns
-          addr: 10.0.0.1
+          addr: 192.168.75.2
 
         - tag: direct-dns1
           addr: 223.5.5.5
@@ -118,7 +118,8 @@ plugins:
     type: "domain_set"
     args:
       files:
-        - ./sites/AWAvenue.txt
+        - ./sites/adblock.txt
+        - ./custom/reject.txt
 
   - tag: "redirect"
     type: "redirect"
@@ -142,9 +143,9 @@ plugins:
       - matches: qtype 64 65
         exec: reject
 
-      # #广告规则
-      # - matches: qname $ad_match
-      #   exec: reject
+      #广告规则
+      - matches: qname $ad_match
+        exec: reject
 
       - matches:
           - "!qtype 1 28"
