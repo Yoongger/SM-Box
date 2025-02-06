@@ -32,4 +32,4 @@ jobs:
           push: true
           tags: |
             yoongger/sm-box:latest
-            yoongger/sm-box:{{ .RunID }}
+            yoongger/sm-box:${{ github.run_id }}
