@@ -1,36 +1,47 @@
 # syntax=docker/dockerfile:1.4
 FROM --platform=$BUILDPLATFORM alpine:3.18
 
-ARG SINGBOX_VERSION="1.11.1"
+ARG SING_BOX_VERSION="1.11.1"
 ARG MOSDNS_VERSION="v5.3.3"
 ARG TARGETARCH
 ARG TARGETVARIANT
 
 RUN apk add --no-cache ca-certificates supervisor
 
-# 根据架构生成平台标识
-RUN case "${TARGETARCH}-${TARGETVARIANT}" in \
-    "amd64-")      SINGBOX_ARCH=amd64; MOSDNS_ARCH=amd64 ;; \
-    "arm64-")      SINGBOX_ARCH=arm64; MOSDNS_ARCH=arm64 ;; \
-    "arm-v7")      SINGBOX_ARCH=armv7; MOSDNS_ARCH=arm-7 ;; \
-    *) echo "Unsupported platform: ${TARGETARCH}-${TARGETVARIANT}"; exit 1 ;; \
+# 安装sing-box
+RUN case "${TARGETARCH}" in \
+    "amd64") SING_ARCH="amd64" ;; \
+    "arm64") SING_ARCH="arm64" ;; \
+    "arm") \
+        case "${TARGETVARIANT}" in \
+            "v7") SING_ARCH="armv7" ;; \
+            *) echo "Unsupported ARM variant: ${TARGETVARIANT}"; exit 1 ;; \
+        esac ;; \
+    *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
     esac && \
-    echo "Target arch: ${SINGBOX_ARCH}" > /arch.txt
-
-# 下载 sing-box
-RUN wget -O /opt/sing-box.tar.gz \
-    "https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-${SINGBOX_ARCH}.tar.gz" && \
+    wget -O sing-box.tar.gz \
+        "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-${SING_ARCH}.tar.gz" && \
     mkdir -p /opt/sing-box && \
     tar -xzf /opt/sing-box.tar.gz -C /opt/sing-box --strip-components=1 && \
     rm -rf /opt/sing-box.tar.gz
 
-# 下载 mosdns
-RUN wget -O /opt/mosdns.zip \
-    "https://github.com/IrineSistiana/mosdns/releases/download/${MOSDNS_VERSION}/mosdns-linux-${MOSDNS_ARCH}.zip" && \
+# 安装mosdns
+RUN case "${TARGETARCH}" in \
+    "amd64") MOSDNS_ARCH="amd64" ;; \
+    "arm64") MOSDNS_ARCH="arm64" ;; \
+    "arm") \
+        case "${TARGETVARIANT}" in \
+            "v7") MOSDNS_ARCH="arm-7" ;; \
+            *) echo "Unsupported ARM variant: ${TARGETVARIANT}"; exit 1 ;; \
+        esac ;; \
+    *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
+    esac && \
+    wget -O /opt/mosdns.zip \
+        "https://github.com/IrineSistiana/mosdns/releases/download/${MOSDNS_VERSION}/mosdns-linux-${MOSDNS_ARCH}.zip" && \
     mkdir -p /opt/mosdns && \
     unzip /opt/mosdns.zip -d /opt/mosdns && \
     rm /opt/mosdns.zip
-
+    
 # 复制配置文件
 COPY config/sing-box.json /opt/sing-box/config.json
 COPY config/mosdns.yaml /opt/mosdns/config.yaml
