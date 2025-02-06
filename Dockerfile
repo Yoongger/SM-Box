@@ -31,7 +31,7 @@ RUN case "${TARGETARCH}" in \
     "arm64") MOSDNS_ARCH="arm64" ;; \
     "arm") \
         case "${TARGETVARIANT}" in \
-            "v7") MOSDNS_ARCH="armv7" ;; \
+            "v7") MOSDNS_ARCH="arm-7" ;; \
             *) echo "Unsupported ARM variant: ${TARGETVARIANT}"; exit 1 ;; \
         esac ;; \
     *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
