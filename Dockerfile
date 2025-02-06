@@ -45,7 +45,7 @@ RUN case "${TARGETARCH}" in \
 # 复制配置文件
 COPY config/sing-box.json /opt/sing-box/config.json
 COPY config/mosdns.yaml /opt/mosdns/config.yaml
-COPY config/plugins/* /opt/mosdns
+COPY config/plugins /opt/mosdns
 COPY config/supervisord.conf /etc/supervisord.conf
 COPY config/entrypoint.sh /entrypoint.sh
 
