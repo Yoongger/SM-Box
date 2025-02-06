@@ -2,7 +2,7 @@
 
 # 检查配置文件
 check_config() {
-    if ! /app/singbox/sing-box check -c /app/singbox/config.json; then
+    if ! /opt/sing-box/sing-box check -c /opt/sing-box/config.json; then
         echo "❌ Singbox 配置检查失败"
         exit 1
     fi
