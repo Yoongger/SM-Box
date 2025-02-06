@@ -18,14 +18,14 @@ RUN case "${TARGETARCH}-${TARGETVARIANT}" in \
     echo "Target arch: ${SINGBOX_ARCH}" > /arch.txt
 
 # 下载 sing-box
-RUN curl -Lo /opt/sing-box.tar.gz \
+RUN wget -O /opt/sing-box.tar.gz \
     "https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VERSION}/sing-box-${SINGBOX_VERSION}-linux-${SINGBOX_ARCH}.tar.gz" && \
     mkdir -p /opt/sing-box && \
     tar -xzf /opt/sing-box.tar.gz -C /opt/sing-box --strip-components=1 && \
     rm -rf /opt/sing-box.tar.gz
 
 # 下载 mosdns
-RUN curl -Lo /opt/mosdns.zip \
+RUN wget -O /opt/mosdns.zip \
     "https://github.com/IrineSistiana/mosdns/releases/download/${MOSDNS_VERSION}/mosdns-linux-${MOSDNS_ARCH}.zip" && \
     mkdir -p /opt/mosdns && \
     unzip /opt/mosdns.zip -d /opt/mosdns && \
