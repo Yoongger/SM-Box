@@ -6,7 +6,7 @@ ARG MOSDNS_VERSION="v5.3.3"
 ARG TARGETARCH
 ARG TARGETVARIANT
 
-RUN apk add --no-cache ca-certificates supervisor tzdata libcap shadow
+RUN apk add --no-cache ca-certificates supervisor
 
 # 根据架构生成平台标识
 RUN case "${TARGETARCH}-${TARGETVARIANT}" in \
