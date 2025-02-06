@@ -19,7 +19,7 @@ RUN case "${TARGETARCH}" in \
         esac ;; \
     *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
     esac && \
-    wget -O sing-box.tar.gz \
+    wget -O /opt/sing-box.tar.gz \
         "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-${SING_ARCH}.tar.gz" && \
     mkdir -p /opt/sing-box && \
     tar -xzf /opt/sing-box.tar.gz -C /opt/sing-box --strip-components=1 && \
