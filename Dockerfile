@@ -21,9 +21,10 @@ RUN case "${TARGETARCH}" in \
     esac && \
     wget -O /opt/sing-box.tar.gz \
         "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-${SING_ARCH}.tar.gz" && \
-    mkdir -p /opt/sing-box && \
-    tar -xzf /opt/sing-box.tar.gz -C /opt/sing-box --strip-components=1 && \
-    rm -rf /opt/sing-box.tar.gz
+    mkdir -p /sing-box && \
+    tar -xzf /sing-box.tar.gz -C /sing-box --strip-components=1 && \
+    mv /sing-box/sing-box /usr/local/bin && \
+    rm -rf /sing-box.tar.gz
 
 # 安装mosdns
 RUN case "${TARGETARCH}" in \
@@ -38,21 +39,22 @@ RUN case "${TARGETARCH}" in \
     esac && \
     wget -O /opt/mosdns.zip \
         "https://github.com/IrineSistiana/mosdns/releases/download/${MOSDNS_VERSION}/mosdns-linux-${MOSDNS_ARCH}.zip" && \
-    mkdir -p /opt/mosdns && \
-    unzip /opt/mosdns.zip -d /opt/mosdns && \
-    rm /opt/mosdns.zip
+    mkdir -p /mosdns && \
+    unzip /mosdns.zip -d /mosdns && \
+    mv /mosdns/mosdns /usr/local/bin && \
+    rm /mosdns.zip
 
 # 复制配置文件
-COPY sing-box /opt/sing-box
-COPY mosdns /opt/mosdns
+COPY sing-box /sing-box
+COPY mosdns /mosdns
 COPY scripts/supervisord.conf /etc/supervisord.conf
 COPY scripts/entrypoint.sh /entrypoint.sh
 
 # 创建运行目录
 RUN mkdir -p /var/log/sing-box && \
     mkdir -p /var/log/mosdns && \
-    chmod +x /opt/sing-box/sing-box && \
-    chmod +x /opt/mosdns/mosdns && \
+    chmod +x /usr/local/bin/sing-box && \
+    chmod +x /usr/local/bin/mosdns && \
     chmod +x /entrypoint.sh
 
 EXPOSE 53/udp 53/tcp 80 5354 9090
