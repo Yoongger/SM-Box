@@ -19,7 +19,7 @@ RUN case "${TARGETARCH}" in \
         esac ;; \
     *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
     esac && \
-    wget -O /opt/sing-box.tar.gz \
+    wget -O /sing-box.tar.gz \
         "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-${SING_ARCH}.tar.gz" && \
     mkdir -p /sing-box && \
     tar -xzf /sing-box.tar.gz -C /sing-box --strip-components=1 && \
@@ -37,7 +37,7 @@ RUN case "${TARGETARCH}" in \
         esac ;; \
     *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
     esac && \
-    wget -O /opt/mosdns.zip \
+    wget -O /mosdns.zip \
         "https://github.com/IrineSistiana/mosdns/releases/download/${MOSDNS_VERSION}/mosdns-linux-${MOSDNS_ARCH}.zip" && \
     mkdir -p /mosdns && \
     unzip /mosdns.zip -d /mosdns && \
