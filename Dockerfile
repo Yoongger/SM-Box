@@ -41,7 +41,7 @@ RUN case "${TARGETARCH}" in \
     mkdir -p /opt/mosdns && \
     unzip /opt/mosdns.zip -d /opt/mosdns && \
     rm /opt/mosdns.zip
-    
+
 # 复制配置文件
 COPY sing-box /opt/sing-box
 COPY mosdns /opt/mosdns
@@ -56,4 +56,5 @@ RUN mkdir -p /var/log/sing-box && \
     chmod +x /entrypoint.sh
 
 EXPOSE 53/udp 53/tcp 80 5354 9090
+#CMD ["/usr/bin/supervisord","-c","/etc/supervisord.conf"]
 ENTRYPOINT ["/entrypoint.sh"]
