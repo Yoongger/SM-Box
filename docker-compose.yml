@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  sm-box:
+    build: .
+    container_name: sm-box
+    restart: unless-stopped
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+      - "80:80"
+      - "9090:9090"
+    #volumes:
+    #  - ./config/sing-box:/sing-box
+    #  - ./config/mosdns:/mosdns

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#1a237e" />
+    <!-- 补充SEO相关元数据 -->
+    <meta name="description" content="代理配置管理系统 - 提供可视化代理规则配置、流量监控和策略管理功能" />
+    <meta name="keywords" content="代理配置,网络管理,流量控制,规则管理">
+    <!-- PWA支持 -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- 添加网站图标 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="%PUBLIC_URL%/logo-192.png">
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo-192.png">
+    <!-- 安全相关头 -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+    <title>代理配置管理系统 | 控制台</title>
+</head>
+<body class="antialiased">
+    <noscript>
+        <div class="noscript-warning">
+            <h1>请启用JavaScript</h1>
+            <p>本系统需要JavaScript支持才能正常运行，请启用浏览器JavaScript功能后刷新页面。</p>
+        </div>
+    </noscript>
+    <div id="root"></div>
+    <!-- 添加PWA服务工作者 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('%PUBLIC_URL%/service-worker.js');
+            });
+        }
+    </script>
+</body>
+</html>
