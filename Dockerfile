@@ -45,8 +45,8 @@ RUN case "${TARGETARCH}" in \
     rm /mosdns.zip
 
 # 复制配置文件
-COPY sing-box /sing-box
-COPY mosdns /mosdns
+COPY config/sing-box /sing-box
+COPY config/mosdns /mosdns
 COPY scripts/supervisord.conf /etc/supervisord.conf
 COPY scripts/entrypoint.sh /entrypoint.sh
 
