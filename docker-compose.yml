@@ -11,5 +11,5 @@ services:
       - "80:80"
       - "9090:9090"
     #volumes:
-    #  - ./config/sing-box:/sing-box
-    #  - ./config/mosdns:/mosdns
+    #  - ./config/sing-box:/msbox/sing-box
+    #  - ./config/mosdns:/msbox/mosdns
