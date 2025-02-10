@@ -60,12 +60,12 @@ RUN case "${TARGETARCH}" in \
         "https://github.com/UIforFreedom/UIF/releases/download/${UIF_VERSION}/uif-linux-${UIF_ARCH}.tar.gz" && \
     mkdir -p /smbox/uif && \
     tar -xzf /uif.tar.gz -C /smbox/uif --strip-components=1 && \
-    mv /smbox/uif/uif /usr/local/bin && \
     rm /uif.tar.gz
 
 # 复制配置文件
 COPY config/sing-box /smbox/sing-box
 COPY config/mosdns /smbox/mosdns
+COPY config/uif /smbox/uif
 COPY scripts/supervisord.conf /etc/supervisord.conf
 COPY scripts/entrypoint.sh /entrypoint.sh
 
@@ -75,7 +75,7 @@ RUN mkdir -p /var/log/sing-box && \
     mkdir -p /var/log/uif && \
     chmod +x /usr/local/bin/sing-box && \
     chmod +x /usr/local/bin/mosdns && \
-    chmod +x /usr/local/bin/uif && \
+    chmod +x /smbox/uif/uif && \
     chmod +x /entrypoint.sh
 
 EXPOSE 53/udp 53/tcp 80 5354 9090
