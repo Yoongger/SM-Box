@@ -57,7 +57,7 @@ RUN case "${TARGETARCH}" in \
     *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
     esac && \
     wget -O /uif.tar.gz \
-        "https://github.com/UIforFreedom/UIF/releases/download/${MOSDNS_VERSION}/uif-linux-${MOSDNS_ARCH}.tar.gz" && \
+        "https://github.com/UIforFreedom/UIF/releases/download/${UIF_VERSION}/uif-linux-${UIF_ARCH}.tar.gz" && \
     mkdir -p /smbox/uif && \
     tar -xzf /uif.tar.gz -C /smbox/uif --strip-components=1 && \
     mv /smbox/uif/uif /usr/local/bin && \
