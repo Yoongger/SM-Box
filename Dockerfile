@@ -78,6 +78,6 @@ RUN mkdir -p /var/log/sing-box && \
     chmod +x /smbox/uif/uif && \
     chmod +x /entrypoint.sh
 
-EXPOSE 53/udp 53/tcp 80 5354 9090
+EXPOSE 53/udp 53/tcp 8080 5354 9090
 #CMD ["/usr/bin/supervisord","-c","/etc/supervisord.conf"]
 ENTRYPOINT ["/entrypoint.sh"]
