@@ -3,6 +3,7 @@ FROM --platform=$BUILDPLATFORM alpine:3.18
 
 ARG SING_BOX_VERSION="1.11.1"
 ARG MOSDNS_VERSION="v5.3.3"
+ARG UIF_VERSION="v25.01.10"
 ARG TARGETARCH
 ARG TARGETVARIANT
 
@@ -44,6 +45,24 @@ RUN case "${TARGETARCH}" in \
     mv /smbox/mosdns/mosdns /usr/local/bin && \
     rm /mosdns.zip
 
+# 安装UIF
+RUN case "${TARGETARCH}" in \
+    "amd64") UIF_ARCH="amd64" ;; \
+    "arm64") UIF_ARCH="arm64" ;; \
+    "arm") \
+        case "${TARGETVARIANT}" in \
+            "v7") UIF_ARCH="armv7" ;; \
+            *) echo "Unsupported ARM variant: ${TARGETVARIANT}"; exit 1 ;; \
+        esac ;; \
+    *) echo "Unsupported architecture: ${TARGETARCH}"; exit 1 ;; \
+    esac && \
+    wget -O /uif.tar.gz \
+        "https://github.com/UIforFreedom/UIF/releases/download/${MOSDNS_VERSION}/uif-linux-${MOSDNS_ARCH}.tar.gz" && \
+    mkdir -p /smbox/uif && \
+    tar -xzf /uif.tar.gz -C /smbox/uif --strip-components=1 && \
+    mv /smbox/uif/uif /usr/local/bin && \
+    rm /uif.tar.gz
+
 # 复制配置文件
 COPY config/sing-box /smbox/sing-box
 COPY config/mosdns /smbox/mosdns
@@ -53,8 +72,10 @@ COPY scripts/entrypoint.sh /entrypoint.sh
 # 创建运行目录
 RUN mkdir -p /var/log/sing-box && \
     mkdir -p /var/log/mosdns && \
+    mkdir -p /var/log/uif && \
     chmod +x /usr/local/bin/sing-box && \
     chmod +x /usr/local/bin/mosdns && \
+    chmod +x /usr/local/bin/uif && \
     chmod +x /entrypoint.sh
 
 EXPOSE 53/udp 53/tcp 80 5354 9090
