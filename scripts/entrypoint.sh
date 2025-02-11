@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # 检查配置文件
-if ! /usr/local/bin/sing-box check -c /smbox/sing-box/config.json; then
+if ! /smbox/sing-box/sing-box check -c /smbox/sing-box/config.json; then
     echo "❌ Singbox 配置检查失败"
     exit 1
 fi
